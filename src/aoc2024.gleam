@@ -1,5 +1,5 @@
-import day2
+import gladvent
 
 pub fn main() {
-  day2.run()
+  gladvent.run()
 }

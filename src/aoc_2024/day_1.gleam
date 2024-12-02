@@ -1,12 +1,12 @@
-import common
 import gleam/dict
 import gleam/list
-import gleam/io
 import gleam/int
 import gleam/result
 import gleam/string
 
-fn split_halves(lines: List(String), accum: #(List(Int), List(Int))) -> #(List(Int), List(Int)) {
+type Input = #(List(Int), List(Int))
+
+fn split_halves(lines: List(String), accum: Input) -> Input {
   case lines {
     [line, ..rest] -> {
       let assert [x, y] = string.split(line, "   ")
@@ -54,18 +54,20 @@ fn sim_score(a: List(Int), counts: dict.Dict(Int, Int), accum: Int) -> Int {
   }
 }
 
-pub fn run() {
-  let lines = common.read_input() |> string.trim() |> string.split(on: "\n")
-  let #(a, b) = split_halves(lines, #([], []))
+pub fn parse(input: String) -> Input {
+  let lines = input |> string.split("\n")
+  split_halves(lines, #([], []))
+}
 
-  // Part 1
+pub fn pt_1(input: Input) -> Int {
+  let #(a, b) = input
   let a = list.sort(a, int.compare)
   let b = list.sort(b, int.compare)
-  let result = sum_sorted(list.zip(a, b), 0)
-  io.println(int.to_string(result))
+  sum_sorted(list.zip(a, b), 0)
+}
 
-  // Part 2
+pub fn pt_2(input: Input) -> Int {
+  let #(a, b) = input
   let counts = list_to_counts(b, dict.new())
-  let result = sim_score(a, counts, 0)
-  io.println(int.to_string(result))
+  sim_score(a, counts, 0)
 }

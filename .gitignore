@@ -2,5 +2,4 @@
 *.ez
 /build
 erl_crash.dump
-sample.txt
-input.txt
+input

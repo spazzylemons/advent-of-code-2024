@@ -1,11 +1,10 @@
-import common
-
 import gleam/bool
 import gleam/int
-import gleam/io
 import gleam/list
 import gleam/order
 import gleam/string
+
+type Input = List(List(Int))
 
 fn are_numbers_safe(a: Int, b: Int, direction: order.Order) -> Bool {
   use <- bool.guard(a == b, False)
@@ -16,8 +15,8 @@ fn are_numbers_safe(a: Int, b: Int, direction: order.Order) -> Bool {
   direction == order.Eq || direction == int.compare(b, a)
 }
 
-fn safety_check(post: List(Int), direction: order.Order, can_remove: Bool) -> Bool {
-  case post {
+fn safety_check(l: List(Int), direction: order.Order, can_remove: Bool) -> Bool {
+  case l {
     [a, b, c, ..xs] -> {
       let new_direction = int.compare(b, a)
       let is_safe = are_numbers_safe(a, b, direction) && are_numbers_safe(b, c, new_direction)
@@ -48,12 +47,14 @@ fn parse_line(report: String) -> List(Int) {
   report |> string.split(" ") |> list.filter_map(int.parse)
 }
 
-pub fn run() {
-  let input = common.read_input_lines() |> list.map(parse_line)
+pub fn parse(input: String) -> Input {
+  input |> string.split("\n") |> list.map(parse_line)
+}
 
-  let part1 = list.count(input, run_part1)
-  io.println(int.to_string(part1))
+pub fn pt_1(input: Input) -> Int {
+  list.count(input, run_part1)
+}
 
-  let part2 = list.count(input, run_part2)
-  io.println(int.to_string(part2))
+pub fn pt_2(input: Input) -> Int {
+  list.count(input, run_part2)
 }
