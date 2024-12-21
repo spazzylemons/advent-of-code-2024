@@ -35,6 +35,7 @@ packages = [
 ]
 
 [requirements]
+carpenter = { version = ">= 0.3.1 and < 1.0.0" }
 gladvent = { version = ">= 2.0.2 and < 3.0.0" }
 gleam_otp = { version = ">= 0.14.1 and < 1.0.0" }
 gleam_regexp = { version = ">= 1.0.0 and < 2.0.0" }
